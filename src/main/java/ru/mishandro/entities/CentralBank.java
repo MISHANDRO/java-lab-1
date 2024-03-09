@@ -78,4 +78,17 @@ public class CentralBank {
     public Bank getBankByName(@NotNull String name) {
         return bankRepository.getBankByName(name);
     }
+
+    /**
+     * Refactoring {@link Bank}
+     * @param bank {@link Bank} with another parameters
+     */
+    public void updateBankParameters(@NotNull Bank bank) {
+        Bank cur = CentralBank.instance().getBankById(bank.getId());
+        if (cur != null && !cur.getName().equalsIgnoreCase(bank.getName())) {
+            bankRepository.update(bank);
+        }
+
+        bankService.modified(bank);
+    }
 }

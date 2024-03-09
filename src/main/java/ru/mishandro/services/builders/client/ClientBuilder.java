@@ -7,7 +7,7 @@ import ru.mishandro.services.repositories.ClientRepository;
 
 public class ClientBuilder implements NameClientBuilder, AddressPassportClientBuilder {
 
-    private int bankOwnerId;
+    private final int bankOwnerId;
     private String name;
     private String surname;
     private String address;
@@ -29,19 +29,21 @@ public class ClientBuilder implements NameClientBuilder, AddressPassportClientBu
 
     @Override
     public AddressPassportClientBuilder withAddress(@NotNull String address) {
-        this.address = address;
+        this.address = address.trim();
         return this;
     }
 
     @Override
     public AddressPassportClientBuilder withPassportNumber(@NotNull String passportNumber) {
-        this.passportNumber = passportNumber;
+        this.passportNumber = passportNumber.trim();
         return this;
     }
 
     @Override
     public Client create() {
-        Client newClient = new Client(name, surname, address, passportNumber, bankOwnerId);
+        Client newClient = new Client(name, surname, bankOwnerId);
+        newClient.setAddress(address);
+        newClient.setPassportNumber(passportNumber);
 
         if (!clientRepository.addClient(newClient)) {
             return null;

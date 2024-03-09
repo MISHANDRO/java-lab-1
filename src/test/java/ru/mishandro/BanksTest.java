@@ -344,10 +344,6 @@ public class BanksTest {
         Assertions.assertEquals(curBalance.getInt(),
                 updateBankAccount(creditAccount).getBalance().getInt());
     }
-
-    void notifications() {
-        // TODO
-    }
     
     private BankAccount setStartBalance(BankAccount bankAccount, double startBalance) {
         BankAccount curAccount = accountService.getAccountById(bankAccount.getId());

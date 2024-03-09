@@ -19,6 +19,7 @@ public class BankBuilder {
 
     public BankBuilder(BankRepository bankRepository) {
         this.bankRepository = bankRepository;
+        debitPercents.put(0, .0);
     }
 
     public BankBuilder withName(@NotNull String name) {
@@ -52,7 +53,7 @@ public class BankBuilder {
     }
 
     public Bank create() {
-        if (this.name.isEmpty()) {
+        if (name.isEmpty() || debitPercents.firstKey() != 0) {
             return null;
         }
 

@@ -1,6 +1,7 @@
 package ru.mishandro.presentation.client;
 
 import ru.mishandro.entities.Client;
+import ru.mishandro.presentation.Setup;
 import ru.mishandro.presentation.abstractions.ChosenScenario;
 import ru.mishandro.presentation.abstractions.Scenario;
 import ru.mishandro.presentation.enums.ClientSet;
@@ -32,8 +33,13 @@ public class SetClientScenario extends ChosenScenario<ClientSet> implements Scen
         System.out.print("Enter new value: ");
         Scanner scanner = new Scanner(System.in);
         String newValue = scanner.nextLine();
-        // TODO set (if "" than null)
 
+        switch (choose) {
+            case Address -> client.setAddress(newValue);
+            case PassportNumber -> client.setPassportNumber(newValue);
+        }
+
+        Setup.instance().getClientService().updateClientParameters(client);
         return true;
     }
 }

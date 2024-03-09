@@ -3,15 +3,24 @@ package ru.mishandro.services;
 import org.jetbrains.annotations.NotNull;
 import ru.mishandro.entities.Bank;
 import ru.mishandro.entities.CentralBank;
+import ru.mishandro.entities.Client;
 import ru.mishandro.entities.accounts.BankAccount;
 import ru.mishandro.models.Money;
+import ru.mishandro.models.observers.Observer;
 import ru.mishandro.models.visitors.BankAccountOperationVisitor;
 import ru.mishandro.services.factories.visitor.BankAccountOperationVisitorFactory;
+
+import java.util.*;
 
 public class BankService {
     private final BankAccountOperationVisitorFactory bankAccountOperationVisitorFactory;
     private final ClientService clientService;
     private final AccountService accountService;
+    /**
+     * bankId - list of client ids
+     */
+    private final HashMap<Integer, Set<Integer>> subscribesClients = new HashMap<>();
+    private Observer observer;
 
     public BankService(
             @NotNull ClientService clientService,
@@ -65,5 +74,27 @@ public class BankService {
 
         return curAccountFrom.makeTransfer(
                 bankAccountOperationVisitorFactory.create(curBank), curAccountTo, amount);
+    }
+
+    public void subscribe(@NotNull Client client) {
+        if (!subscribesClients.containsKey(client.getBankId())) {
+            subscribesClients.put(client.getBankId(), new HashSet<>());
+        }
+
+        subscribesClients.get(client.getBankId()).add(client.getId());
+    }
+
+    public void modified(@NotNull Bank bank) {
+        if (observer == null) {
+            return;
+        }
+
+        for (Integer clientId : subscribesClients.get(bank.getId())) {
+            observer.onNext(clientService.getClientById(clientId), bank);
+        }
+    }
+
+    public void setObserver(Observer observer) {
+        this.observer = observer;
     }
 }

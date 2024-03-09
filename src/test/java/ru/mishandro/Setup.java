@@ -81,10 +81,13 @@ public class Setup {
         bankRepository.addBank(bank1);
         bankRepository.addBank(bank2);
 
-
-        client1 = new Client("Client1", "First", "uiop", "1234 123456", bank1.getId());
-        client2 = new Client("Client2", "Second", null, "0987 098765", bank1.getId());
-        client3 = new Client("Client3", "Third", "qwerty", null, bank2.getId());
+        Client client1 = new Client("Client1", "First", bank1.getId());
+        client1.setAddress("uiop");
+        client1.setPassportNumber("1234 123456");
+        Client client2 = new Client("Client2", "Second", bank1.getId());
+        client2.setPassportNumber("0987 098765");
+        Client client3 = new Client("Client3", "Third", bank2.getId());
+        client3.setAddress("qwerty");
 
         clientRepository.addClient(client1);
         clientRepository.addClient(client2);

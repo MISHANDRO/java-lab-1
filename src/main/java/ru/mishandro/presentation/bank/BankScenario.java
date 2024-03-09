@@ -7,6 +7,8 @@ import ru.mishandro.presentation.abstractions.Scenario;
 import ru.mishandro.presentation.client.ChooseClientScenario;
 import ru.mishandro.presentation.client.CreateClientScenario;
 
+import java.time.Duration;
+
 public class BankScenario extends ChosenScenario<Scenario> implements Scenario {
     private final Bank bank;
 
@@ -28,10 +30,12 @@ public class BankScenario extends ChosenScenario<Scenario> implements Scenario {
 
     @Override
     protected void setup() {
-        title = "A bank \"" + this.bank.getName() + "\"";
+        title = "A bank \"" + this.bank.getName() + "\"\n" +
+                "Interest on balance for debit per year: " + bank.getInterestOnBalance() + "\n" +
+                "Restriction for doubtful for per year: " + bank.getRestrictionForDoubtful() + "\n" +
+                "Transfer's limit for questionable clients: " + bank.getLimitForQuestionable() + "\n";
 
         add("Create client", new CreateClientScenario(bank));
         add("Select a client", new ChooseClientScenario(bank));
-        add("Refactor", new RefactorBankScenario(bank));
     }
 }

@@ -2,6 +2,7 @@ package ru.mishandro.services.repositories;
 
 import org.jetbrains.annotations.NotNull;
 import ru.mishandro.entities.Bank;
+import ru.mishandro.entities.Client;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,5 +39,15 @@ public class InMemoryBankRepository implements BankRepository {
                 .findFirst()
                 .map(Bank::clone)
                 .orElse(null);
+    }
+
+    @Override
+    public void update(@NotNull Bank bank) {
+        Bank curBank = getBankById(bank.getId());
+        if (curBank == null) {
+            return;
+        }
+
+        banks.set(banks.indexOf(curBank), curBank.clone());
     }
 }

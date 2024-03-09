@@ -7,29 +7,23 @@ import org.jetbrains.annotations.NotNull;
  */
 public class Client {
     private int id = -1;
-    private @NotNull String name;
-    private @NotNull String surname;
+    private final @NotNull String name;
+    private final @NotNull String surname;
     private String address;
     private String passportNumber;
-    private int bankId;
+    private final int bankId;
 
     /**
      * @param name client's name
      * @param surname client's surname
-     * @param address the address of the client's residence
-     * @param passportNumber customer's passport number
      * @param bankId id of the {@link Bank} that the client belongs to
      */
     public Client(
             @NotNull String name,
             @NotNull String surname,
-            String address,
-            String passportNumber,
             int bankId) {
         this.name = name;
         this.surname = surname;
-        this.address = address;
-        this.passportNumber = passportNumber;
         this.bankId = bankId;
     }
 
@@ -37,8 +31,10 @@ public class Client {
      *  Copy of this {@link Client}
      */
     public Client clone() {
-        Client cloneClient = new Client(name, surname, address, passportNumber, bankId);
+        Client cloneClient = new Client(name, surname, bankId);
         cloneClient.id = id;
+        cloneClient.address = address;
+        cloneClient.passportNumber = passportNumber;
 
         return cloneClient;
     }
@@ -98,7 +94,7 @@ public class Client {
      * @param address new value
      */
     public void setAddress(String address) {
-        this.address = address;
+        this.address = (address == null || address.trim().isEmpty()) ? null : address;
     }
 
     /**
@@ -106,6 +102,6 @@ public class Client {
      * @param passportNumber new value
      */
     public void setPassportNumber(String passportNumber) {
-        this.passportNumber = passportNumber;
+        this.passportNumber = (address == null || passportNumber.trim().isEmpty()) ? null : passportNumber;
     }
 }

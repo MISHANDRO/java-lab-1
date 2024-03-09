@@ -29,4 +29,12 @@ public class ClientService {
     public Client getClientById(int id) {
         return clientRepository.getClientById(id);
     }
+
+    public void updateClientParameters(@NotNull Client client) {
+        Client cur = clientRepository.getClientById(client.getId());
+        if (cur != null && !cur.getName().equalsIgnoreCase(client.getName())
+        && !cur.getSurname().equalsIgnoreCase(client.getSurname())) {
+            clientRepository.updateClientParameters(client);
+        }
+    }
 }

@@ -28,7 +28,6 @@ public class ClientScenario extends ChosenScenario<Scenario> implements Scenario
         add("Create a bank account", new CreateAccountScenario(client));
         add("Select a bank account", new ChooseAccountScenario(client));
         add("Set parameters",        new SetClientScenario(client));
-        add("Select a notification", new NotificationsScenario(client));
     }
 
     @Override

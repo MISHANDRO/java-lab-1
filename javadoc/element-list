@@ -3,7 +3,7 @@ ru.mishandro.entities
 ru.mishandro.entities.accounts
 ru.mishandro.models
 ru.mishandro.models.chanes
-ru.mishandro.models.subscriber
+ru.mishandro.models.observers
 ru.mishandro.models.visitors
 ru.mishandro.presentation
 ru.mishandro.presentation.abstractions

@@ -10,4 +10,5 @@ public interface BankRepository {
     boolean addBank(@NotNull Bank bank);
     Bank getBankById(int bankId);
     Bank getBankByName(@NotNull String name);
+    void update(@NotNull Bank bank);
 }
